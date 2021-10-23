@@ -1,4 +1,4 @@
-#!/bin/sh --Created by DHDAXCW
+#!/bin/sh --Created by quzard
 opkg update
 opkg install pv
 opkg install gzip
@@ -8,7 +8,7 @@ echo -e '\e[92m准备下载升级文件\e[0m'
 for t in $(seq 0 14)
 do {
     echo `(date -d "@$(( $(busybox date +%s) - 86400*$t))" +%Y.%m.%d)`
-    wget https://github.com/DHDAXCW/NanoPi-R4S-2021/releases/download/$(date -d "@$(( $(busybox date +%s) - 86400*$t))" +%Y.%m.%d)-Lean3/openwrt-rockchip-armv8-friendlyarm_nanopi-r4s-ext4-sysupgrade.img.gz
+    wget https://github.com/quzard/NanoPi-R4S-2021/releases/download/$(date -d "@$(( $(busybox date +%s) - 86400*$t))" +%Y.%m.%d)-Lean3/openwrt-rockchip-armv8-friendlyarm_nanopi-r4s-ext4-sysupgrade.img.gz
     if [ -f /tmp/openwrt-rockchip-armv8-friendlyarm_nanopi-r4s-ext4-sysupgrade.img.gz ]; then
         echo -e '\e[92m固件已下载\e[0m'
         echo `(date -d "@$(( $(busybox date +%s) - 86400*$t))" +%Y.%m.%d)`-Lean3

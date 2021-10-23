@@ -31,27 +31,10 @@ function to_check()
 	system_version = get_system_version()
 	sysverformat = luci.sys.exec("date -d $(echo " ..system_version.. " | awk -F. '{printf $3\"-\"$1\"-\"$2}') +%s")
 	currentTimeStamp = luci.sys.exec("expr $(date -d \"$(date '+%Y-%m-%d %H:%M:%S')\" +%s) - 172800")
-	if model == "x86_64" then
-		check_update()
-		if fs.access("/sys/firmware/efi") then
-			download_url = "https://github.com/DHDAXCW/lede/releases/latest" ..model.. "/" ..dateyr.. "-openwrt-x86-64-generic-squashfs-combined-efi.img.gz"
-		else
-			download_url = "https://github.com/DHDAXCW/lede/releases/latest" ..model.. "/" ..dateyr.. "-openwrt-x86-64.gz"
-		end
-    elseif model:match(".*R2S.*") then
+    if model:match(".*R2S.*") then
 		model = "nanopi-r2s"
 		check_update()
-        download_url = "https://github.com/DHDAXCW/NanoPi-R2S-2021/releases/latest" ..model.. "/" ..dateyr.. "-openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz"
-    elseif model:match(".*R4S.*") then
-		model = "nanopi-r4s"
-		check_update()
-        download_url = "https://github.com/DHDAXCW//NanoPi-R4S-2021/releases/latest" ..model.. "/" ..dateyr.. "-oopenwrt-rockchip-armv8-friendlyarm_nanopi-r4s-squashfs-sysupgrade.img.gz"
-	else
-		local needs_update = false
-		return {
-            code = 1,
-            error = i18n.translate("Can't determine MODEL, or MODEL not supported.")
-			}
+        download_url = "https://github.com/quzard/NanoPi-R2S-2021/releases/latest" ..model.. "/" ..dateyr.. "-openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz"
 	end
 	
 
