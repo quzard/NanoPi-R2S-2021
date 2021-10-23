@@ -3,10 +3,8 @@ name: NanoPi R2S Docker FusionWRT
 on:
   repository_dispatch:
   workflow_dispatch:
-  schedule:
-    - cron: 0 17 * * *
-  # watch:
-  #   types: started
+  watch:
+    types: started
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
