@@ -34,6 +34,14 @@ svn co https://github.com/immortalwrt/packages/trunk/net/minieap packages/net/mi
 # Replace smartdns with the official version
 rm -rf packages/net/smartdns
 svn co https://github.com/openwrt/packages/trunk/net/smartdns packages/net/smartdns
+
+# luci-app-seu-net
+git clone https://github.com/quzard/luci-app-seu-net.git package/luci-app-seu-net
+
+# sub-web
+rm -rf $(find /home/user/NanoPi-R2S-2021/openwrt -name "*sub-web*")
+git clone https://github.com/quzard/openwrt-sub-web.git package/openwrt-sub-web
+
 popd
 
 # Set to local feeds
