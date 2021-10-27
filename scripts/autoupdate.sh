@@ -41,16 +41,16 @@ version_choose () {
 download_file () {
     cd /tmp && clean_up
     days=$(($days+1))
-    echo `(date -d "@$(($(busybox date +%s) - 86400*($days-1)))" +%Y.%m.%d)`
-    wget https://github.com/quzard/NanoPi-R4S-2021/releases/download/$(date -d "@$(($(busybox date +%s) - 86400*($days-1)))" +%Y.%m.%d)-Lean$choose/openwrt-rockchip-armv8-friendlyarm_nanopi-r4s-ext4-sysupgrade.img.gz
-    wget https://github.com/quzard/NanoPi-R4S-2021/releases/download/$(date -d "@$(($(busybox date +%s) - 86400*($days-1)))" +%Y.%m.%d)-Lean$choose/sha256sums
+    echo `(date -d "@$(($(busybox date +%s) - 86400*($days-1)))" +%Y.%m.%d.%H)`
+    wget https://github.com/quzard/NanoPi-R4S-2021/releases/download/$(date -d "@$(($(busybox date +%s) - 86400*($days-1)))" +%Y.%m.%d.%H)-Lean$choose/openwrt-rockchip-armv8-friendlyarm_nanopi-r4s-ext4-sysupgrade.img.gz
+    wget https://github.com/quzard/NanoPi-R4S-2021/releases/download/$(date -d "@$(($(busybox date +%s) - 86400*($days-1)))" +%Y.%m.%d.%H)-Lean$choose/sha256sums
     exist_judge
 }
 #存在判断
 exist_judge () {
     if [ -f /tmp/openwrt-rockchip-armv8-friendlyarm_nanopi-r4s-ext4-sysupgrade.img.gz ]; then
         echo -e '\e[92m固件已下载\e[0m'
-        echo `(date -d "@$(($(busybox date +%s) - 86400*($days-1)))" +%Y.%m.%d)`-Lean$choose
+        echo `(date -d "@$(($(busybox date +%s) - 86400*($days-1)))" +%Y.%m.%d.%H)`-Lean$choose
         version_skip
     elif [ $days == 21 ]; then
         echo -e '\e[91m未找到合适固件，脚本退出\e[0m'

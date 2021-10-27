@@ -179,7 +179,7 @@ sed -i 's/192.168.1.1/192.168.31.2/g' package/base-files/files/bin/config_genera
 
 # Custom configs
 git am $GITHUB_WORKSPACE/patches/*.patch
-echo -e " quzard's FusionWrt built on "$(date +%Y.%m.%d)"\n -----------------------------------------------------" >> package/base-files/files/etc/banner
+echo -e " quzard's FusionWrt built on "$(date +%Y.%m.%d.%H)"\n -----------------------------------------------------" >> package/base-files/files/etc/banner
 echo 'net.bridge.bridge-nf-call-iptables=0' >> package/base-files/files/etc/sysctl.conf
 echo 'net.bridge.bridge-nf-call-ip6tables=0' >> package/base-files/files/etc/sysctl.conf
 echo 'net.bridge.bridge-nf-call-arptables=0' >> package/base-files/files/etc/sysctl.conf
