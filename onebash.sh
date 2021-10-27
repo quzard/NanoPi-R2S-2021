@@ -4,8 +4,6 @@ export GIT_SSL_NO_VERIFY=1
 echo "$DATE_START"
 cd ~ || exit
 rm -rf NanoPi-R2S-2021
-git config --global user.email "1191890118@qq.com"
-git config --global user.name "quzard"
 REPO_URL="https://github.com/coolsnowwolf/lede"
 REPO_BRANCH="master"
 CONFIG_FILE="configs/lean/lean.config"
@@ -61,11 +59,11 @@ chmod -R 777 ./
 echo "Compile Packages"
 echo "$(nproc) thread compile"
 cd $OPENWRTROOT
-make tools/compile -j$(nproc) || make tools/compile -j1 V=s
-make toolchain/compile -j$(nproc) || make toolchain/compile -j1 V=s
-make target/compile -j$(nproc) || make target/compile -j1 V=s IGNORE_ERRORS=1
+make tools/compile -j $(nproc) || make tools/compile -j1 V=s
+make toolchain/compile -j $(nproc) || make toolchain/compile -j1 V=s
+make target/compile -j $(nproc) || make target/compile -j1 V=s IGNORE_ERRORS=1
 make diffconfig
-make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
+make package/compile -j $(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
 make package/index
 cd $OPENWRTROOT/bin/packages/*
 PLATFORM=$(basename `pwd`)
@@ -95,8 +93,8 @@ fi
 cp files/etc/opkg/distfeeds.conf.server files/etc/opkg/distfeeds.conf.mirror
 sed -i "s/http:\/\/192.168.123.100:2345\/snapshots/https:\/\/openwrt.cc\/snapshots\/$(date +"%Y-%m-%d")\/lean/g" files/etc/opkg/distfeeds.conf.mirror
 
-make package/install -j$(nproc) || make package/install -j1 V=s
-make target/install -j$(nproc) || make target/install -j1 V=s
+make package/install -j $(nproc) || make package/install -j1 V=s
+make target/install -j $(nproc) || make target/install -j1 V=s
 
 
 
