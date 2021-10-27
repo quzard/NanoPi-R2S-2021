@@ -163,15 +163,15 @@ wget -P package/kernel/linux/modules/ https://github.com/immortalwrt/immortalwrt
 sed -i 's/\/bin\/ash/\/usr\/bin\/zsh/g' package/base-files/files/etc/passwd
 
 # Modify default IP
-sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
+# sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
 sed -i '/uci commit system/i\uci set system.@system[0].hostname='FusionWrt'' package/lean/default-settings/files/zzz-default-settings
 sed -i "s/OpenWrt /quzard @ FusionWrt $(TZ=UTC-8 date "+%Y%m%d") /g" package/lean/default-settings/files/zzz-default-settings
 
 
-# sed -i 's,"eth1" "eth0","eth0" "eth1",g' target/linux/rockchip/armv8/base-files/etc/board.d/02_network
-# sed -i "s,'eth1' 'eth0','eth0' 'eth1',g" target/linux/rockchip/armv8/base-files/etc/board.d/02_network
-# sed -i "s,\$(macaddr_random),\"fe:fd:a9:e0:1c:88\",g" target/linux/rockchip/armv8/base-files/etc/board.d/02_network
-# sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
+sed -i 's,"eth1" "eth0","eth0" "eth1",g' target/linux/rockchip/armv8/base-files/etc/board.d/02_network
+sed -i "s,'eth1' 'eth0','eth0' 'eth1',g" target/linux/rockchip/armv8/base-files/etc/board.d/02_network
+sed -i "s,\$(macaddr_random),\"fe:fd:a9:e0:1c:88\",g" target/linux/rockchip/armv8/base-files/etc/board.d/02_network
+sed -i 's/192.168.1.1/192.168.31.2/g' package/base-files/files/bin/config_generate
 
 # find package/*/ feeds/*/ -maxdepth 6 -path "*luci-app-smartdns/luasrc/controller/smartdns.lua" | xargs -i sed -i 's/\"SmartDNS\")\, 4/\"SmartDNS\")\, 3/g' {} 
 # Test kernel 5.10
