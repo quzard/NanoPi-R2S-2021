@@ -4,7 +4,7 @@
 git clone https://github.com/quzard/luci-app-seu-net.git package/luci-app-seu-net
 
 # sub-web
-rm -rf $(find /home/user/NanoPi-R2S-2021/openwrt -name "*sub-web*")
+rm -rf $(find . -name "*sub-web*")
 git clone https://github.com/quzard/openwrt-sub-web.git package/openwrt-sub-web
 
 
