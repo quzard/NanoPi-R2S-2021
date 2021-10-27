@@ -12,14 +12,15 @@ CONFIG_FILE="configs/lean/lean.config"
 DIY_SH="scripts/lean.sh"
 KMODS_IN_FIRMWARE="true"
 
+echo "Clone Source Code"
 git clone https://github.com/quzard/NanoPi-R2S-2021.git
 cd NanoPi-R2S-2021
 SUBTARGET=$(basename `pwd`)
 FIRMWARE=$PWD
 export GITHUB_WORKSPACE=$PWD
-
 git clone $REPO_URL -b $REPO_BRANCH openwrt
 
+echo "Update Feeds"
 cd openwrt
 OPENWRTROOT=$PWD
 mkdir customfeeds
@@ -28,47 +29,50 @@ git clone --depth=1 https://github.com/coolsnowwolf/luci customfeeds/luci
 chmod +x ../scripts/*.sh
 ../scripts/hook-feeds.sh
 
+echo "MOD index file"
 cd $OPENWRTROOT/package/lean/autocore/files/arm
 sed -i '/Load Average/i\\t\t<tr><td width="33%"><%:Telegram %></td><td><a href="https://t.me/DHDAXCW"><%:电报交流群%></a></td></tr>' index.htm
 
-
+echo "Install Feeds"
 cd $OPENWRTROOT
 ./scripts/feeds install -a
 
-cd ../
-[ -e files ] && cp files $OPENWRTROOT/files
-[ -e $CONFIG_FILE ] && cp $CONFIG_FILE $OPENWRTROOT/.config
+echo "Load Custom Configuration"
+cd $FIRMWARE
+[ -e files ] && mv files $OPENWRTROOT/files
+[ -e $CONFIG_FILE ] && mv $CONFIG_FILE $OPENWRTROOT/.config
+chmod +x scripts/*.sh
 cd $OPENWRTROOT
 ../$DIY_SH
 ../scripts/preset-clash-core.sh armv8
 ../scripts/preset-terminal-tools.sh
 make defconfig
 
+echo "Download Package"
 cd $OPENWRTROOT
 if "$KMODS_IN_FIRMWARE" = 'true'
 then
     echo "CONFIG_ALL_NONSHARED=y" >> .config
 fi
 ../scripts/modify_config.sh
-
-
-make download -j"$(nproc)" || make download -j1 
-
+make download -j20 | make download -j1
 chmod -R 777 ./
 
+echo "Compile Packages"
+echo "$(nproc) thread compile"
+cd $OPENWRTROOT
 make tools/compile -j$(nproc) || make tools/compile -j1 V=s
 make toolchain/compile -j$(nproc) || make toolchain/compile -j1 V=s
 make target/compile -j$(nproc) || make target/compile -j1 V=s IGNORE_ERRORS=1
 make diffconfig
 make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
 make package/index
-
 cd $OPENWRTROOT/bin/packages/*
 PLATFORM=$(basename `pwd`)
 cd $OPENWRTROOT/bin/targets/*
 TARGET=$(basename `pwd`)
 
-
+echo "Generate Firmware"
 cd $SUBTARGET/configs/opkg
 sed -i "s/subtarget/$SUBTARGET/g" distfeeds*.conf
 sed -i "s/target\//$TARGET\//g" distfeeds*.conf
@@ -97,7 +101,8 @@ make target/install -j$(nproc) || make target/install -j1 V=s
 
 
 
-cd $OPENWRTROOTbin/targets/rockchip/armv8
+cp $OPENWRTROOTbin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz /home/user/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz
+cd /home/user
 DATE_END=$(date "+%Y-%m-%d %H:%M:%S")
 echo "DATE_START:$DATE_START"
 echo "DATE_END:$DATE_END"
