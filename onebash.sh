@@ -53,7 +53,7 @@ then
     echo "CONFIG_ALL_NONSHARED=y" >> .config
 fi
 ../scripts/modify_config.sh
-make download -j $(nproc) | make download -j1
+make download -j $(nproc) | make download -j1 V=s
 chmod -R 777 ./
 
 echo "Compile Packages"
