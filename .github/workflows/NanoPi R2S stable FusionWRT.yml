@@ -102,7 +102,6 @@ jobs:
             echo "CONFIG_ALL_NONSHARED=y" >> .config
         fi
         ../scripts/modify_config.sh
-        cat .config
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
@@ -170,6 +169,7 @@ jobs:
         fi
         make package/install -j$(nproc) || make package/install -j1 V=s
         make target/install -j$(nproc) || make target/install -j1 V=s
+        make  -j$(nproc) || make  -j1 V=s
         make checksum
         echo "::set-output name=GENERATE_STATUS::success"
 
