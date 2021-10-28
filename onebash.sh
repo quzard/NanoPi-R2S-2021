@@ -1,3 +1,4 @@
+clear
 DATE_START=$(date "+%Y-%m-%d %H:%M:%S")
 git config --global http.sslVerify false
 export GIT_SSL_NO_VERIFY=1
