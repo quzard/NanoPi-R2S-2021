@@ -103,9 +103,9 @@ svn co https://github.com/QiuSimons/OpenWrt_luci-app/trunk/luci-app-tencentddns 
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-aliddns feeds/luci/applications/luci-app-aliddns
 ln -sf ../../../feeds/luci/applications/luci-app-aliddns ./package/feeds/luci/luci-app-aliddns
 
-# Add luci-app-ddnsto
+
 pushd package/network/services
-git clone --depth=1 https://github.com/linkease/ddnsto-openwrt
+
 popd
 
 # Add luci-app-linkease
@@ -195,3 +195,9 @@ rm -rf ./feeds/packages/net/adguardhome
 svn co https://github.com/openwrt/packages/trunk/net/adguardhome feeds/packages/net/adguardhome
 sed -i '/\t)/a\\t$(STAGING_DIR_HOST)/bin/upx --lzma --best $(GO_PKG_BUILD_BIN_DIR)/AdGuardHome' ./feeds/packages/net/adguardhome/Makefile
 sed -i '/init/d' feeds/packages/net/adguardhome/Makefile
+# luci-app-seu-net
+git clone https://github.com/quzard/luci-app-seu-net.git package/luci-app-seu-net
+
+# sub-web
+rm -rf $(find . -name "*sub-web*")
+git clone https://github.com/quzard/openwrt-sub-web.git package/openwrt-sub-web
