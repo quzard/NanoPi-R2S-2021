@@ -193,5 +193,4 @@ sed -i '/init/d' feeds/packages/net/adguardhome/Makefile
 git clone https://github.com/quzard/luci-app-seu-net.git package/lean/luci-app-seu-net
 
 # sub-web
-rm -rf $(find . -name "*sub-web*")
 git clone https://github.com/quzard/openwrt-sub-web.git package/lean/openwrt-sub-web
