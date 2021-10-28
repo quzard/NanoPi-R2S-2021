@@ -28,9 +28,6 @@ git clone --depth=1 https://github.com/coolsnowwolf/luci customfeeds/luci
 chmod +x ../scripts/*.sh
 ../scripts/hook-feeds.sh
 
-echo "MOD index file"
-cd $OPENWRTROOT/package/lean/autocore/files/arm
-sed -i '/Load Average/i\\t\t<tr><td width="33%"><%:Telegram %></td><td><a href="https://t.me/DHDAXCW"><%:电报交流群%></a></td></tr>' index.htm
 
 echo "Install Feeds"
 cd $OPENWRTROOT
