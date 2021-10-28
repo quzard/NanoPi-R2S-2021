@@ -59,7 +59,8 @@ git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config
 rm -rf ../lean/luci-theme-argon
 
 # Add subconverter
-git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter
+# git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter
+svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/net/subconverter
 
 # Add extra wireless drivers
 svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8812au-ac
