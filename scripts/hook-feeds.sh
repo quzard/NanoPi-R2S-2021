@@ -1,13 +1,4 @@
 #!/bin/bash
-
-# luci-app-seu-net
-git clone https://github.com/quzard/luci-app-seu-net.git package/luci-app-seu-net
-
-# sub-web
-rm -rf $(find . -name "*sub-web*")
-git clone https://github.com/quzard/openwrt-sub-web.git package/openwrt-sub-web
-
-
 # Svn checkout packages from immortalwrt's repository
 pushd customfeeds
 
