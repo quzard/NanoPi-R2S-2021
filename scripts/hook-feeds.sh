@@ -1,17 +1,19 @@
 #!/bin/bash
 # 订阅转换
-svn co https://github.com/immortalwrt/packages/trunk/libs/jpcre2      feeds/packages/libs/jpcre2
-svn co https://github.com/immortalwrt/packages/trunk/libs/libcron     feeds/packages/libs/libcron
-svn co https://github.com/immortalwrt/packages/trunk/libs/quickjspp   feeds/packages/libs/quickjspp
-svn co https://github.com/immortalwrt/packages/trunk/libs/rapidjson   feeds/packages/libs/rapidjson
-svn co https://github.com/immortalwrt/packages/trunk/libs/toml11      feeds/packages/libs/toml11
 svn co https://github.com/immortalwrt/packages/trunk/net/subconverter feeds/packages/net/subconverter
-ln -sf ../../../feeds/packages/libs/jpcre2      ./package/feeds/packages/jpcre2
-ln -sf ../../../feeds/packages/libs/libcron     ./package/feeds/packages/libcron
-ln -sf ../../../feeds/packages/libs/quickjspp   ./package/feeds/packages/quickjspp
-ln -sf ../../../feeds/packages/libs/rapidjson   ./package/feeds/packages/rapidjson
-ln -sf ../../../feeds/packages/libs/toml11      ./package/feeds/packages/toml11
+sed -i '\/bin\/subconverter/a\\t$(STAGING_DIR_HOST)/bin/upx --lzma --best $(1)/usr/bin/subconverter' feeds/packages/net/subconverter/Makefile
 ln -sf ../../../feeds/packages/net/subconverter ./package/feeds/packages/subconverter
+svn co https://github.com/immortalwrt/packages/trunk/libs/jpcre2 feeds/packages/libs/jpcre2
+ln -sf ../../../feeds/packages/libs/jpcre2 ./package/feeds/packages/jpcre2
+svn co https://github.com/immortalwrt/packages/trunk/libs/rapidjson feeds/packages/libs/rapidjson
+ln -sf ../../../feeds/packages/libs/rapidjson ./package/feeds/packages/rapidjson
+svn co https://github.com/immortalwrt/packages/trunk/libs/libcron feeds/packages/libs/libcron
+ln -sf ../../../feeds/packages/libs/libcron ./package/feeds/packages/libcron
+svn co https://github.com/immortalwrt/packages/trunk/libs/quickjspp feeds/packages/libs/quickjspp
+ln -sf ../../../feeds/packages/libs/quickjspp ./package/feeds/packages/quickjspp
+svn co https://github.com/immortalwrt/packages/trunk/libs/toml11 feeds/packages/libs/toml11
+ln -sf ../../../feeds/packages/libs/toml11 ./package/feeds/packages/toml11
+
 
 
 # Svn checkout packages from immortalwrt's repository
