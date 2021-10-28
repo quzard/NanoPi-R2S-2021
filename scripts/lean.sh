@@ -103,11 +103,6 @@ svn co https://github.com/QiuSimons/OpenWrt_luci-app/trunk/luci-app-tencentddns 
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-aliddns feeds/luci/applications/luci-app-aliddns
 ln -sf ../../../feeds/luci/applications/luci-app-aliddns ./package/feeds/luci/luci-app-aliddns
 
-
-pushd package/network/services
-
-popd
-
 # Add luci-app-linkease
 pushd package/network/services
 git clone --depth=1 https://github.com/linkease/linkease-openwrt
