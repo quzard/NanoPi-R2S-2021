@@ -37,9 +37,6 @@ git clone --depth=1 -b master https://github.com/vernesong/OpenClash
 # Add luci-app-onliner (need luci-app-nlbwmon)
 git clone --depth=1 https://github.com/rufengsuixing/luci-app-onliner
 
-# Add luci-app-oled (R2S Only)
-git clone --depth=1 https://github.com/NateLol/luci-app-oled
-
 # Add ServerChan
 git clone --depth=1 https://github.com/tty228/luci-app-serverchan
 
