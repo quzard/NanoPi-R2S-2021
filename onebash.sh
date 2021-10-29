@@ -49,10 +49,6 @@ make defconfig
 
 echo "Download Package"
 cd $OPENWRTROOT
-if "$KMODS_IN_FIRMWARE" = 'true'
-then
-    echo "CONFIG_ALL_NONSHARED=y" >> .config
-fi
 ../scripts/modify_config.sh
 make download -j $(nproc) | make download -j1 V=s
 chmod -R 777 ./
@@ -83,14 +79,7 @@ mkdir -p files/etc/opkg
 cp ../configs/opkg/distfeeds-packages-server.conf files/etc/opkg/distfeeds.conf.server
 mkdir -p files/etc/opkg/keys
 cp ../configs/opkg/1035ac73cc4e59e3 files/etc/opkg/keys/1035ac73cc4e59e3
-if "$KMODS_IN_FIRMWARE" = 'true'
-then
-    mkdir -p files/www/snapshots
-    cp -r bin/targets files/www/snapshots
-    cp ../configs/opkg/distfeeds-18.06-local.conf files/etc/opkg/distfeeds.conf
-else
-    cp ../configs/opkg/distfeeds-18.06-remote.conf files/etc/opkg/distfeeds.conf
-fi
+cp ../configs/opkg/distfeeds-18.06-remote.conf files/etc/opkg/distfeeds.conf
 cp files/etc/opkg/distfeeds.conf.server files/etc/opkg/distfeeds.conf.mirror
 sed -i "s/http:\/\/192.168.123.100:2345\/snapshots/https:\/\/openwrt.cc\/snapshots\/$(date +"%Y-%m-%d")\/lean/g" files/etc/opkg/distfeeds.conf.mirror
 

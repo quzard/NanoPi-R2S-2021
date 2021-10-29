@@ -1,13 +1,5 @@
 #!/bin/bash
-
-# FRP 内网穿透
-
-rm -rf ./feeds/luci/applications/luci-app-frpc
-rm -rf ./feeds/packages/net/frp
-rm -f ./package/feeds/packages/frp
-
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-frpc package/lean/luci-app-frpc
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/frp package/lean/frp
+rm -rf package/qca/
 
 # Svn checkout packages from immortalwrt's repository
 pushd customfeeds
@@ -70,3 +62,10 @@ echo "src-link luci $luci_feed" >> feeds.conf.default
 
 # Update feeds
 ./scripts/feeds update -a
+
+# FRP 内网穿透
+rm -rf ./feeds/luci/applications/luci-app-frpc
+rm -rf ./feeds/packages/net/frp
+rm -f ./package/feeds/packages/frp
+svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-frpc package/lean/luci-app-frpc
+svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/frp package/lean/frp
