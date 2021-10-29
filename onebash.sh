@@ -43,8 +43,6 @@ cd $OPENWRTROOT
 ../$DIY_SH
 ../scripts/preset-clash-core.sh armv8
 ../scripts/preset-terminal-tools.sh
-./scripts/feeds update -a
-./scripts/feeds install -a
 make defconfig
 
 echo "Download Package"
