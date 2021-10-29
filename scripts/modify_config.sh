@@ -8,7 +8,7 @@ CONFIG_PACKAGE_openssh-sftp-server=y
 CONFIG_PACKAGE_iperf3=y
 CONFIG_PACKAGE_luci-app-seu-net=y
 CONFIG_PACKAGE_luci-app-frpc=y
-
+CONFIG_PACKAGE_frpc=y
 CONFIG_PACKAGE_luci-app-jd-dailybonus=y
 CONFIG_PACKAGE_luci-app-ttyd=y
 CONFIG_PACKAGE_luci-app-unblockmusic=y
