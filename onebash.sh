@@ -10,7 +10,7 @@ REPO_URL="https://github.com/coolsnowwolf/lede"
 REPO_BRANCH="master"
 CONFIG_FILE="configs/lean/lean.config"
 DIY_SH="scripts/lean.sh"
-KMODS_IN_FIRMWARE="true"
+KMODS_IN_FIRMWARE="false"
 
 echo "Clone Source Code"
 git clone https://github.com/quzard/NanoPi-R2S-2021.git
