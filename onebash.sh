@@ -47,7 +47,7 @@ make defconfig
 echo "Download Package"
 cd $OPENWRTROOT
 ../scripts/modify_config.sh
-make download -j $(nproc)
+make download -j5
 make download -j1 V=s
 
 chmod -R 777 ./
