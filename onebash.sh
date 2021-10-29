@@ -47,7 +47,11 @@ make defconfig
 echo "Download Package"
 cd $OPENWRTROOT
 ../scripts/modify_config.sh
-make download -j5
+mkdir dl
+cd dl
+wget http://miniupnp.free.fr/files/miniupnpd-2.0.20170421.tar.gz
+cd ..
+make download -j$(nproc)
 make download -j1 V=s
 
 chmod -R 777 ./
