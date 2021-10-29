@@ -38,7 +38,6 @@ echo "Load Custom Configuration"
 cd $FIRMWARE
 [ -e files ] && mv files $OPENWRTROOT/files
 [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $OPENWRTROOT/.config
-chmod +x scripts/*.sh
 cd $OPENWRTROOT
 ../$DIY_SH
 ../scripts/preset-clash-core.sh armv8
@@ -48,7 +47,9 @@ make defconfig
 echo "Download Package"
 cd $OPENWRTROOT
 ../scripts/modify_config.sh
-make download -j $(nproc) | make download -j1 V=s
+make download -j $(nproc)
+make download -j1 V=s
+
 chmod -R 777 ./
 
 echo "Compile Packages"
