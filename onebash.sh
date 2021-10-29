@@ -72,8 +72,7 @@ cp ../configs/opkg/distfeeds-18.06-remote.conf files/etc/opkg/distfeeds.conf
 cp files/etc/opkg/distfeeds.conf.server files/etc/opkg/distfeeds.conf.mirror
 sed -i "s/http:\/\/192.168.123.100:2345\/snapshots/https:\/\/openwrt.cc\/snapshots\/$(date +"%Y-%m-%d")\/lean/g" files/etc/opkg/distfeeds.conf.mirror
 
-make package/install -j $(nproc) || make package/install -j1 V=s
-make target/install -j $(nproc) || make target/install -j1 V=s
+make  -j$(nproc) || make  -j$(nproc) || make  -j1 V=s
 
 
 
