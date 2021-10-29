@@ -7,7 +7,6 @@ echo "
 CONFIG_PACKAGE_openssh-sftp-server=y
 CONFIG_PACKAGE_iperf3=y
 CONFIG_PACKAGE_subconverter=y
-CONFIG_PACKAGE_sub-web=y
 CONFIG_PACKAGE_luci-app-seu-net=y
 CONFIG_PACKAGE_luci-app-frpc=y
 
