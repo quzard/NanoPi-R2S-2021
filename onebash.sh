@@ -52,25 +52,11 @@ make download -j1 V=s
 
 chmod -R 777 ./
 
-echo "Compile Packages"
-echo "$(nproc) thread compile"
-cd $OPENWRTROOT
-make tools/compile -j $(nproc) || make tools/compile -j1 V=s
-make toolchain/compile -j $(nproc) || make toolchain/compile -j1 V=s
-make target/compile -j $(nproc) || make target/compile -j1 V=s IGNORE_ERRORS=1
-make diffconfig
-make package/compile -j $(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
-make package/index
-cd $OPENWRTROOT/bin/packages/*
-PLATFORM=$(basename `pwd`)
-cd $OPENWRTROOT/bin/targets/*
-TARGET=$(basename `pwd`)
-
 echo "Generate Firmware"
 cd $SUBTARGET/configs/opkg
-sed -i "s/subtarget/$SUBTARGET/g" distfeeds*.conf
-sed -i "s/target\//$TARGET\//g" distfeeds*.conf
-sed -i "s/platform/$PLATFORM/g" distfeeds*.conf
+sed -i "s/subtarget/armv8/g" distfeeds*.conf
+sed -i "s/target\//rockchip\//g" distfeeds*.conf
+sed -i "s/platform/aarch64_generic/g" distfeeds*.conf
 cd $OPENWRTROOT
 mkdir -p files/etc/uci-defaults/
 cp ../scripts/init-settings.sh files/etc/uci-defaults/99-init-settings
