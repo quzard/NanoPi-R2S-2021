@@ -8,7 +8,7 @@ cd ~ || exit
 rm -rf NanoPi-R2S-2021
 REPO_URL="https://github.com/coolsnowwolf/lede"
 REPO_BRANCH="master"
-CONFIG_FILE="configs/lean/lean.config"
+CONFIG_FILE="configs/lean/lean_stable.config"
 DIY_SH="scripts/lean.sh"
 KMODS_IN_FIRMWARE="false"
 
@@ -76,7 +76,7 @@ make  -j$(nproc) || make  -j$(nproc) || make  -j1 V=s
 
 
 
-cp $OPENWRTROOT/bin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz /home/user/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz
+cp $OPENWRTROOT/bin/targets/rockchip/armv8/* /home/user
 cd /home/user
 DATE_END=$(date "+%Y-%m-%d %H:%M:%S")
 echo "DATE_START:$DATE_START"
