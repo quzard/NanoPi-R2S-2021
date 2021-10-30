@@ -31,6 +31,7 @@ chmod +x ../scripts/*.sh
 
 echo "Install Feeds"
 cd $OPENWRTROOT
+./scripts/feeds update -a
 ./scripts/feeds install -a
 
 echo "Load Custom Configuration"
