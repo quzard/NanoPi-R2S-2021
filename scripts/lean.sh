@@ -21,10 +21,6 @@ rm -rf openwrt-package/luci-app-verysync
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git
 git clone --depth=1 https://github.com/jerrykuku/luci-app-vssr
 
-
-# Add luci-proto-minieap
-git clone --depth=1 https://github.com/ysc3839/luci-proto-minieap
-
 # Add luci-app-bypass
 # git clone https://github.com/garypang13/luci-app-bypass.git
 
