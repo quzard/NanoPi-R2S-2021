@@ -22,7 +22,6 @@ env:
 
 jobs:
   Build:
-    timeout-minutes: 1440
     runs-on: ubuntu-20.04
     if: github.repository == 'quzard/NanoPi-R2S-2021'
     outputs:
@@ -95,36 +94,41 @@ jobs:
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-        make download -j1 V=s
   
     - name: Compile Packages
       id: compile
       run: |
-        PLATFORM="aarch64_generic"
+        cd $OPENWRTROOT
+        echo -e "$(nproc) thread compile"
+        make tools/compile -j$(nproc) || make tools/compile -j1 V=s
+        make toolchain/compile -j$(nproc) || make toolchain/compile -j1 V=s
+        make target/compile -j$(nproc) || make target/compile -j1 V=s IGNORE_ERRORS=1
+        make diffconfig
+        make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
+        make package/index
+        cd $OPENWRTROOT/bin/packages/*
+        PLATFORM=$(basename `pwd`)
         echo "PLATFORM=$PLATFORM" >> $GITHUB_ENV
         echo "::set-output name=PLATFORM::$(echo $PLATFORM)"
-
-
-        TARGET="rockchip"
+        cd $OPENWRTROOT/bin/targets/*
+        TARGET=$(basename `pwd`)
         echo "TARGET=$TARGET" >> $GITHUB_ENV
         echo "::set-output name=TARGET::$(echo $TARGET)"
-
-        SUBTARGET="armv8"
+        cd *
+        SUBTARGET=$(basename `pwd`)
         echo "SUBTARGET=$SUBTARGET" >> $GITHUB_ENV
         echo "::set-output name=SUBTARGET::$(echo $SUBTARGET)"
-
-        echo "FIRMWARE=$OPENWRTROOT/bin/targets/rockchip/armv8" >> $GITHUB_ENV
-        echo "::set-output name=FIRMWARE::$(echo $FIRMWARE)"
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        echo "::set-output name=FIRMWARE::$(echo $PWD)"
         echo "::set-output name=COMPILE_STATUS::success"
-        
     - name: Generate Firmware
       if: steps.compile.outputs.COMPILE_STATUS == 'success'
       id: generate
       run: |
         cd configs/opkg
-        sed -i "s/subtarget/armv8/g" distfeeds*.conf
-        sed -i "s/target\//rockchip\//g" distfeeds*.conf
-        sed -i "s/platform/aarch64_generic/g" distfeeds*.conf
+        sed -i "s/subtarget/$SUBTARGET/g" distfeeds*.conf
+        sed -i "s/target\//$TARGET\//g" distfeeds*.conf
+        sed -i "s/platform/$PLATFORM/g" distfeeds*.conf
         cd $OPENWRTROOT
         mkdir -p files/etc/uci-defaults/
         cp ../scripts/init-settings.sh files/etc/uci-defaults/99-init-settings
@@ -135,8 +139,8 @@ jobs:
         cp ../configs/opkg/distfeeds-18.06-remote.conf files/etc/opkg/distfeeds.conf
         cp files/etc/opkg/distfeeds.conf.server files/etc/opkg/distfeeds.conf.mirror
         sed -i "s/http:\/\/192.168.123.100:2345\/snapshots/https:\/\/openwrt.cc\/snapshots\/$(date +"%Y-%m-%d")\/lean/g" files/etc/opkg/distfeeds.conf.mirror
-        
-        make  -j$(nproc) || make  -j$(nproc) || make  -j1 V=s
+        make package/install -j$(nproc) || make package/install -j1 V=s
+        make target/install -j$(nproc) || make target/install -j1 V=s
         make checksum
         echo "::set-output name=GENERATE_STATUS::success"
     - name: Upload Bin Folder
@@ -147,7 +151,6 @@ jobs:
         path: openwrt/bin
         
   Upload:
-    timeout-minutes: 1440
     needs: [Build]
     runs-on: ubuntu-20.04
     if: github.repository == 'quzard/NanoPi-R2S-2021'
