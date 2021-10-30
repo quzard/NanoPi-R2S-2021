@@ -2,7 +2,7 @@ clear
 DATE_START=$(date "+%Y-%m-%d %H:%M:%S")
 git config --global http.sslVerify false
 export GIT_SSL_NO_VERIFY=1
-export FORCE=1
+
 echo "$DATE_START"
 cd ~ || exit
 rm -rf NanoPi-R2S-2021
@@ -15,7 +15,6 @@ KMODS_IN_FIRMWARE="false"
 echo "Clone Source Code"
 git clone https://github.com/quzard/NanoPi-R2S-2021.git
 cd NanoPi-R2S-2021
-SUBTARGET=$(basename `pwd`)
 FIRMWARE=$PWD
 export GITHUB_WORKSPACE=$PWD
 git clone $REPO_URL -b $REPO_BRANCH openwrt
@@ -57,7 +56,7 @@ make download -j1 V=s
 chmod -R 777 ./
 
 echo "Generate Firmware"
-cd $SUBTARGET/configs/opkg
+cd $FIRMWARE/configs/opkg
 sed -i "s/subtarget/armv8/g" distfeeds*.conf
 sed -i "s/target\//rockchip\//g" distfeeds*.conf
 sed -i "s/platform/aarch64_generic/g" distfeeds*.conf
