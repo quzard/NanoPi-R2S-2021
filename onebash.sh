@@ -76,7 +76,7 @@ make  -j$(nproc) || make  -j$(nproc) || make  -j1 V=s
 
 
 
-cp $OPENWRTROOTbin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz /home/user/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz
+cp $OPENWRTROOT/bin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz /home/user/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz
 cd /home/user
 DATE_END=$(date "+%Y-%m-%d %H:%M:%S")
 echo "DATE_START:$DATE_START"
