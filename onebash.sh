@@ -8,7 +8,7 @@ cd ~ || exit
 rm -rf NanoPi-R2S-2021
 REPO_URL="https://github.com/coolsnowwolf/lede"
 REPO_BRANCH="master"
-CONFIG_FILE="configs/lean/lean.config"
+CONFIG_FILE="configs/lean/lean_stable.config"
 DIY_SH="scripts/lean.sh"
 KMODS_IN_FIRMWARE="false"
 
