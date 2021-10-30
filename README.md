@@ -6,6 +6,7 @@
 - 用户名：root 密码：password 管理IP：192.168.2.1
 - 固件下载：https://github.com/DHDAXCW/NanoPi-R2S-2021/releases
 - x86_64固件下载 https://github.com/DHDAXCW/lede/releases
+- 风扇链接 [点击进入](https://s.click.taobao.com/67X4ceu)
 ### - beta：全插件
 ### - stable：稳定精简
 ### - docker：docker
