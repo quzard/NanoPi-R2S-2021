@@ -89,3 +89,6 @@ rm -rf $(find . -name "*vsftpd*")
 
 # aria2
 rm -rf $(find . -name "*aria2*")
+
+# accesscontrol
+rm -rf $(find . -name "*accesscontrol*")
