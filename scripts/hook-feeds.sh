@@ -92,3 +92,6 @@ rm -rf $(find . -name "*aria2*")
 
 # accesscontrol
 rm -rf $(find . -name "*accesscontrol*")
+
+# qBittorrent
+rm -rf $(find . -name "*qBittorrent*")
