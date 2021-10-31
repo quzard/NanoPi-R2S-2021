@@ -128,8 +128,9 @@ jobs:
         echo "SUBTARGET=$SUBTARGET" >> $GITHUB_ENV
         echo "::set-output name=SUBTARGET::$(echo $SUBTARGET)"
 
-        echo "FIRMWARE=/home/runner/work/NanoPi-R2S-2021/NanoPi-R2S-2021/openwrt/bin/targets/rockchip/armv8" >> $GITHUB_ENV
-        echo "::set-output name=FIRMWARE::$(echo FIRMWARE)"
+        FIRMWARE=/home/runner/work/NanoPi-R2S-2021/NanoPi-R2S-2021/openwrt/bin/targets/rockchip/armv8
+        echo "FIRMWARE=$FIRMWARE" >> $GITHUB_ENV
+        echo "::set-output name=FIRMWARE::$(echo $FIRMWARE)"
         echo "::set-output name=COMPILE_STATUS::success"
 
     - name: Generate Firmware
