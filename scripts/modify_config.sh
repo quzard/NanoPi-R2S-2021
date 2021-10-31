@@ -15,6 +15,4 @@ CONFIG_PACKAGE_luci-app-unblockmusic=y
 CONFIG_UnblockNeteaseMusic_Go=y
 CONFIG_UnblockNeteaseMusic_NodeJS=y
 CONFIG_PACKAGE_luci-app-usb-printer=y
-CONFIG_PACKAGE_subconverter=y
-CONFIG_PACKAGE_sub-web=y
 " >> .config
