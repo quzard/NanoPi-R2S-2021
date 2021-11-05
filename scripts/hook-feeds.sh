@@ -10,10 +10,6 @@ svn co https://github.com/immortalwrt/luci/trunk/applications/luci-app-eqos luci
 # Add luci-proto-modemmanager
 svn co https://github.com/immortalwrt/luci/trunk/protocols/luci-proto-modemmanager luci/protocols/luci-proto-modemmanager
 
-# Add luci-app-gowebdav
-svn co https://github.com/immortalwrt/luci/trunk/applications/luci-app-gowebdav luci/applications/luci-app-gowebdav
-svn co https://github.com/immortalwrt/packages/trunk/net/gowebdav packages/net/gowebdav
-
 # Add luci-app-netdata
 rm -rf packages/admin/netdata
 svn co https://github.com/281677160/openwrt-package/trunk/feeds/packages/net/netdata packages/admin/netdata
