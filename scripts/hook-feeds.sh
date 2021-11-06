@@ -91,3 +91,6 @@ rm -rf $(find . -name "*accesscontrol*")
 
 # qBittorrent
 rm -rf $(find . -name "*qBittorrent*")
+
+# luci-app-unblockneteasemusic
+git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git package/luci-app-seu-net
