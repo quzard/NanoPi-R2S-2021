@@ -11,7 +11,11 @@
 ### - stable：稳定精简
 ### - docker：docker
 - 电报群：https://t.me/DHDAXCW
-
+### 该升级支持4G版，1G版
+- 多版本在里面，自己选 👇
+```
+wget https://raw.githubusercontent.com/lone-wind/scripts/main/onlineupdate.sh && sh onlineupdate.sh
+```
 # 插件展示
  ![插件展示](data/20.jpg?raw=true "Title")
 
