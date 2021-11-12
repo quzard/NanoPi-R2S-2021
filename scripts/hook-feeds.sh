@@ -11,10 +11,10 @@ svn co https://github.com/immortalwrt/luci/trunk/applications/luci-app-eqos luci
 svn co https://github.com/immortalwrt/luci/trunk/protocols/luci-proto-modemmanager luci/protocols/luci-proto-modemmanager
 
 # Add luci-app-netdata
-rm -rf packages/admin/netdata
-svn co https://github.com/281677160/openwrt-package/trunk/feeds/packages/net/netdata packages/admin/netdata
-rm -rf ../package/lean/luci-app-netdata
-svn co https://github.com/281677160/openwrt-package/trunk/feeds/luci/applications/luci-app-netdata luci/applications/luci-app-netdata
+# rm -rf packages/admin/netdata
+# svn co https://github.com/281677160/openwrt-package/trunk/feeds/packages/net/netdata packages/admin/netdata
+# rm -rf ../package/lean/luci-app-netdata
+# svn co https://github.com/281677160/openwrt-package/trunk/feeds/luci/applications/luci-app-netdata luci/applications/luci-app-netdata
 
 # Add tmate
 git clone --depth=1 https://github.com/immortalwrt/openwrt-tmate
