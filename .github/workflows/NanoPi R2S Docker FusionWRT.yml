@@ -9,8 +9,10 @@ on:
     types: started
 
 env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: master
+  # REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_URL: https://github.com/DHDAXCW/lede
+  # REPO_BRANCH: master
+  REPO_BRANCH: hello
   CONFIG_FILE: configs/lean/lean_docker.config
   DIY_SH: scripts/lean.sh
   IPV6MOD_IN_FIRMWARE: false
@@ -54,7 +56,7 @@ jobs:
         git config --global user.name "GitHub"
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
- 
+
     - name: Update Feeds
       id: update
       run: |
