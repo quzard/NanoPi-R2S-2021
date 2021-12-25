@@ -32,11 +32,11 @@ git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git
 git clone --depth=1 https://github.com/jerrykuku/luci-app-vssr
 
 # Add mentohust & luci-app-mentohust
-# git clone --depth=1 https://github.com/BoringCat/luci-app-mentohust
-# git clone --depth=1 https://github.com/KyleRicardo/MentoHUST-OpenWrt-ipk
+git clone --depth=1 https://github.com/BoringCat/luci-app-mentohust
+git clone --depth=1 https://github.com/KyleRicardo/MentoHUST-OpenWrt-ipk
 
 # Add luci-proto-minieap
-# git clone --depth=1 https://github.com/ysc3839/luci-proto-minieap
+git clone --depth=1 https://github.com/ysc3839/luci-proto-minieap
 
 # Add luci-app-bypass
 # git clone https://github.com/garypang13/luci-app-bypass.git
@@ -51,19 +51,19 @@ git clone --depth=1 https://github.com/rufengsuixing/luci-app-onliner
 svn co https://github.com/Lienol/openwrt-package/branches/other/luci-app-adguardhome
 
 # Add ddnsto & linkease
-# svn co https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-ddnsto
-# svn co https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-linkease
-# svn co https://github.com/linkease/nas-packages/trunk/network/services/ddnsto
-# svn co https://github.com/linkease/nas-packages/trunk/network/services/linkease
+svn co https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-ddnsto
+svn co https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-linkease
+svn co https://github.com/linkease/nas-packages/trunk/network/services/ddnsto
+svn co https://github.com/linkease/nas-packages/trunk/network/services/linkease
 
 # Add luci-app-oled (R2S Only)
-# git clone --depth=1 https://github.com/NateLol/luci-app-oled
+git clone --depth=1 https://github.com/NateLol/luci-app-oled
 
 # Add OpenClash
 git clone --depth=1 -b master https://github.com/vernesong/OpenClash
 
 # Add luci-app-ikoolproxy (godproxy)
-# git clone https://github.com/iwrt/luci-app-ikoolproxy.git
+git clone https://github.com/iwrt/luci-app-ikoolproxy.git
 
 # Add luci-app-dockerman
 rm -rf ../lean/luci-app-docker
@@ -110,15 +110,15 @@ sed -i 's,2016,2208,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-def
 sed -i 's,1512,1608,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
 
 # Add luci-aliyundrive-webdav
-# svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav
-# svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
+svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav
+svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
 
 # 动态DNS
-# git clone --depth 1 https://github.com/small-5/ddns-scripts-dnspod package/lean/ddns-scripts_dnspod
-# git clone --depth 1 https://github.com/small-5/ddns-scripts-aliyun package/lean/ddns-scripts_aliyun
-# svn co https://github.com/QiuSimons/OpenWrt_luci-app/trunk/luci-app-tencentddns package/lean/luci-app-tencentddns
-# svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-aliddns feeds/luci/applications/luci-app-aliddns
-# ln -sf ../../../feeds/luci/applications/luci-app-aliddns ./package/feeds/luci/luci-app-aliddns
+git clone --depth 1 https://github.com/small-5/ddns-scripts-dnspod package/lean/ddns-scripts_dnspod
+git clone --depth 1 https://github.com/small-5/ddns-scripts-aliyun package/lean/ddns-scripts_aliyun
+svn co https://github.com/QiuSimons/OpenWrt_luci-app/trunk/luci-app-tencentddns package/lean/luci-app-tencentddns
+svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-aliddns feeds/luci/applications/luci-app-aliddns
+ln -sf ../../../feeds/luci/applications/luci-app-aliddns ./package/feeds/luci/luci-app-aliddns
 
 # Add Pandownload
 # pushd package/lean
@@ -177,15 +177,13 @@ chmod 777 target/linux/rockchip/armv8/base-files/etc/init.d/fa-rk3328-pwmfan
 chmod 777 target/linux/rockchip/armv8/base-files/usr/bin/start-rk3328-pwm-fan.sh
 
 # Modify default IP
-# sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
+sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
 sed -i '/uci commit system/i\uci set system.@system[0].hostname='FusionWrt'' package/lean/default-settings/files/zzz-default-settings
 sed -i "s/OpenWrt /quzard @ FusionWrt $(TZ=UTC-8 date "+%Y%m%d") /g" package/lean/default-settings/files/zzz-default-settings
 
 
 sed -i 's,"eth1" "eth0","eth0" "eth1",g' target/linux/rockchip/armv8/base-files/etc/board.d/02_network
 sed -i "s,'eth1' 'eth0','eth0' 'eth1',g" target/linux/rockchip/armv8/base-files/etc/board.d/02_network
-sed -i "s,\$(macaddr_random),\"fe:fd:a9:e0:1c:88\",g" target/linux/rockchip/armv8/base-files/etc/board.d/02_network
-sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
 
 # Test kernel 5.10
 # sed -i 's/5.4/5.10/g' target/linux/rockchip/Makefile
