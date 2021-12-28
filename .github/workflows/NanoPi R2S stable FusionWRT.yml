@@ -55,14 +55,12 @@ jobs:
         git config --global user.name "GitHub"
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
-        
+
     - name: Cache
       uses: klever1988/cachewrtbuild@main
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
-        # clean: 'false'
-        clean: 'true'
         
     - name: Update Feeds
       id: update
@@ -79,7 +77,7 @@ jobs:
     - name: MOD index file
       run: |
          cd $OPENWRTROOT/package/lean/autocore/files/arm
-               
+         sed -i '/Load Average/i\\t\t<tr><td width="33%"><%:Telegram %></td><td><a href="https://t.me/DHDAXCW"><%:电报交流群%></a></td></tr>' index.htm      
     - name: Install Feeds
       run: |
         cd $OPENWRTROOT
@@ -101,7 +99,6 @@ jobs:
       run: |
         cd $OPENWRTROOT
         ../scripts/modify_config.sh
-        cat .config
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
@@ -243,7 +240,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S Stable_稳定版
+          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S Stablize_稳定版
           tag_name: ${{ steps.tag.outputs.release_tag }}
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
