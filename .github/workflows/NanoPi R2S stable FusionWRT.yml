@@ -55,12 +55,14 @@ jobs:
         git config --global user.name "GitHub"
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
-
+        
     - name: Cache
       uses: klever1988/cachewrtbuild@main
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
+        # clean: 'false'
+        clean: 'true'
         
     - name: Update Feeds
       id: update
@@ -81,7 +83,6 @@ jobs:
     - name: Install Feeds
       run: |
         cd $OPENWRTROOT
-        ./scripts/feeds update -a
         ./scripts/feeds install -a
 
     - name: Load Custom Configuration
@@ -98,7 +99,12 @@ jobs:
       id: package
       run: |
         cd $OPENWRTROOT
+        if "$KMODS_IN_FIRMWARE" = 'true'
+        then
+            echo "CONFIG_ALL_NONSHARED=y" >> .config
+        fi
         ../scripts/modify_config.sh
+        cat .config
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
@@ -106,33 +112,28 @@ jobs:
     - name: Compile Packages
       id: compile
       run: |
-        # cd $OPENWRTROOT
-        # echo -e "$(nproc) thread compile"
-        # make tools/compile -j$(nproc) || make tools/compile -j1 V=s
-        # make toolchain/compile -j$(nproc) || make toolchain/compile -j1 V=s
-        # make target/compile -j$(nproc) || make target/compile -j1 V=s IGNORE_ERRORS=1
-        # make diffconfig
-        # make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
-        # make package/index
-
-        # cd $OPENWRTROOT/bin/packages/*
-        PLATFORM="aarch64_generic"
+        cd $OPENWRTROOT
+        echo -e "$(nproc) thread compile"
+        make tools/compile -j$(nproc) || make tools/compile -j1 V=s
+        make toolchain/compile -j$(nproc) || make toolchain/compile -j1 V=s
+        make target/compile -j$(nproc) || make target/compile -j1 V=s IGNORE_ERRORS=1
+        make diffconfig
+        make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
+        make package/index
+        cd $OPENWRTROOT/bin/packages/*
+        PLATFORM=$(basename `pwd`)
         echo "PLATFORM=$PLATFORM" >> $GITHUB_ENV
         echo "::set-output name=PLATFORM::$(echo $PLATFORM)"
-
-        # cd $OPENWRTROOT/bin/targets/*
-        TARGET="rockchip"
+        cd $OPENWRTROOT/bin/targets/*
+        TARGET=$(basename `pwd`)
         echo "TARGET=$TARGET" >> $GITHUB_ENV
         echo "::set-output name=TARGET::$(echo $TARGET)"
-
-        # cd *
-        SUBTARGET="armv8"
+        cd *
+        SUBTARGET=$(basename `pwd`)
         echo "SUBTARGET=$SUBTARGET" >> $GITHUB_ENV
         echo "::set-output name=SUBTARGET::$(echo $SUBTARGET)"
-
-        FIRMWARE=/home/runner/work/NanoPi-R2S-2021/NanoPi-R2S-2021/openwrt/bin/targets/rockchip/armv8
-        echo "FIRMWARE=$FIRMWARE" >> $GITHUB_ENV
-        echo "::set-output name=FIRMWARE::$(echo $FIRMWARE)"
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        echo "::set-output name=FIRMWARE::$(echo $PWD)"
         echo "::set-output name=COMPILE_STATUS::success"
 
     - name: Generate Firmware
@@ -150,12 +151,28 @@ jobs:
         cp ../configs/opkg/distfeeds-packages-server.conf files/etc/opkg/distfeeds.conf.server
         mkdir -p files/etc/opkg/keys
         cp ../configs/opkg/1035ac73cc4e59e3 files/etc/opkg/keys/1035ac73cc4e59e3
-        cp ../configs/opkg/distfeeds-18.06-remote.conf files/etc/opkg/distfeeds.conf
+        if "$KMODS_IN_FIRMWARE" = 'true'
+        then
+            mkdir -p files/www/snapshots
+            cp -r bin/targets files/www/snapshots
+            cp ../configs/opkg/distfeeds-18.06-local.conf files/etc/opkg/distfeeds.conf
+        else
+            cp ../configs/opkg/distfeeds-18.06-remote.conf files/etc/opkg/distfeeds.conf
+        fi
         cp files/etc/opkg/distfeeds.conf.server files/etc/opkg/distfeeds.conf.mirror
         sed -i "s/http:\/\/192.168.123.100:2345\/snapshots/https:\/\/openwrt.cc\/snapshots\/$(date +"%Y-%m-%d")\/lean/g" files/etc/opkg/distfeeds.conf.mirror
-        # make package/install -j$(nproc) || make package/install -j1 V=s
-        # make target/install -j$(nproc) || make target/install -j1 V=s
-        make  -j$(nproc) || make  -j$(nproc) || make  -j1 V=s
+        if "$IPV6MOD_IN_FIRMWARE" = 'true'
+        then
+            mkdir -p files/www/ipv6-modules
+            cp bin/packages/$PLATFORM/luci/luci-proto-ipv6* files/www/ipv6-modules
+            cp bin/packages/$PLATFORM/base/{ipv6helper*,odhcpd-ipv6only*,odhcp6c*,6in4*} "files/www/ipv6-modules"
+            cp bin/targets/$TARGET/$SUBTARGET/packages/{ip6tables*,kmod-nf-nat6*,kmod-ipt-nat6*,kmod-sit*,kmod-ip6tables-extra*} "files/www/ipv6-modules"
+            mkdir -p files/bin
+            cp ../scripts/ipv6-helper.sh files/bin/ipv6-helper
+        fi
+        make package/install -j$(nproc) || make package/install -j1 V=s
+        make target/install -j$(nproc) || make target/install -j1 V=s
+        make checksum
         echo "::set-output name=GENERATE_STATUS::success"
 
     - name: Upload Bin Folder
@@ -240,7 +257,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S Stablize_稳定版
+          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S Stable_稳定版
           tag_name: ${{ steps.tag.outputs.release_tag }}
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
@@ -265,4 +282,3 @@ jobs:
         with:
           name: |
             bin-archive
-            
