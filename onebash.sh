@@ -8,8 +8,9 @@ cd ~ || exit
 rm -rf NanoPi-R2S-2021
 REPO_URL="https://github.com/coolsnowwolf/lede"
 REPO_BRANCH="master"
-CONFIG_FILE="configs/lean/lean_stable.config"
+CONFIG_FILE="configs/lean/lean_docker.config"
 DIY_SH="scripts/lean.sh"
+IPV6MOD_IN_FIRMWARE="false"
 KMODS_IN_FIRMWARE="false"
 
 echo "Clone Source Code"
@@ -38,6 +39,7 @@ echo "Load Custom Configuration"
 cd $FIRMWARE
 [ -e files ] && mv files $OPENWRTROOT/files
 [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $OPENWRTROOT/.config
+chmod +x scripts/*.sh
 cd $OPENWRTROOT
 ../$DIY_SH
 ../scripts/preset-clash-core.sh armv8
@@ -47,12 +49,7 @@ make defconfig
 echo "Download Package"
 cd $OPENWRTROOT
 ../scripts/modify_config.sh
-mkdir dl
-cd dl
-wget http://miniupnp.free.fr/files/miniupnpd-2.0.20170421.tar.gz
-cd ..
-make download -j$(nproc)
-make download -j1 V=s
+make download -j8 | make download -j1 V=s
 
 chmod -R 777 ./
 
@@ -77,9 +74,8 @@ make  -j$(nproc) || make  -j$(nproc) || make  -j1 V=s
 
 
 
-cp $OPENWRTROOT/bin/targets/rockchip/armv8/* /home/user
+cp $OPENWRTROOT/bin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz /home/user
 cd /home/user
 DATE_END=$(date "+%Y-%m-%d %H:%M:%S")
 echo "DATE_START:$DATE_START"
 echo "DATE_END:$DATE_END"
-
