@@ -29,7 +29,7 @@ git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall luci/applicati
 svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/admin/gotop packages/admin/gotop
 
 # Add minieap
-svn co https://github.com/immortalwrt/packages/trunk/net/minieap packages/net/minieap
+# svn co https://github.com/immortalwrt/packages/trunk/net/minieap packages/net/minieap
 
 # Replace smartdns with the official version
 rm -rf packages/net/smartdns
